@@ -1,0 +1,2 @@
+# MVP
+Minimal Viable Project
