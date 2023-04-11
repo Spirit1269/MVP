@@ -1,19 +1,22 @@
 //Declare dependencies
-const dotenv = require('dotenv')
-const express = require('express');
+import express from "express";
+import dotenv from "dotenv";
+import pg from "pg";
+const { Pool } = pg;
+
+//Initialize Express
 const app = express();
-const {Pool} = require("pg");
+app.use(express.static("public"));
 
 //Initialize dotenv
 dotenv.config();
-
-//Initialize Express
-app.use(express.json());
 const port = process.env.PORT || 3000;
 
 //Initialize PG
 const pool = new Pool({connectionString:process.env.DATABASE_URL})
 pool.connect();
+
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.send("Welcome to the Yarn DB")
@@ -28,8 +31,10 @@ app.get('/api/yarn', (req, res) => {
     .catch((e) => console.error(e.stack))
 })
 app.get('/api/yarn/:id', (req, res) => {
+    const id = req.params.id; // Get the id from URL parameter
+
     pool
-        .query('SELECT id FROM yarn')
+        .query('SELECT * FROM yarn_table WHERE id = $1', [id])
         .then((result) => {
             res.send(result.rows)
         })
@@ -51,3 +56,11 @@ app.post('/api/yarn', (req, res) => {
          res.send(result.rows);
      })
  }); 
+
+ app.listen(port, function(err) {
+    if (err) {
+        console.error(err);
+    } else {
+        console.log(`Server started on port ${port}`);
+    }
+});
