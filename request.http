@@ -1,0 +1,21 @@
+GET http://localhost:3008
+
+###
+PATCH http://localhost:3008/api/yarn/1
+Content-Type: application/json
+{
+  "color": "blue"
+}
+
+###
+GET http://localhost:3008/api/yarn
+
+###
+GET http://localhost:3008/api/yarn/1
+
+###
+POST http://localhost:3008/api/yarn/
+
+
+###
+DELETE http://localhost:3009/api/3008/api/yarn/3

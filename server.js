@@ -68,7 +68,51 @@ app.post('/api/yarn', (req, res) => {
          console.error(error);
          res.status(500).json({ message: "Internal server error" });
      });
+     
 }); 
+
+app.patch('/api/yarn/:id', (req, res) => {
+    const id = req.params.id; // Get the id from URL parameter
+    const { brand, name_, size_id, fiber_type1, fiber_type2, color, length_, quantity } = req.body; // Get the updated data from request body
+
+    pool.query('UPDATE yarn_table SET brand = $1, name_ = $2, size_id = $3, fiber_type1 = $4, fiber_type2 = $5, color = $6, length_ = $6, quantity = $7 WHERE id = $8 RETURNING *', [
+        brand, name, size_id, fiber_type1, fiber_type2, color, length_, quantity 
+    ])
+    .then((result) => {
+        if (result.rowCount === 0) {
+            // If no rows were affected, return an error
+            res.status(404).json({ message: 'Yarn not found' });
+        } else {
+            // Send relevant response data to client-side
+            res.json({ message: 'Yarn updated successfully', to_do_list: result.rows[0] });
+        }
+    })
+    .catch((error) => {
+        // Handle database errors
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    });
+});
+
+app.delete('/api/yarn/:id', (req, res) => {
+    const id = req.params.id; // Get the id from URL parameter
+
+    pool.query('DELETE FROM yarn_table WHERE id = $1 RETURNING *', [id])
+    .then((result) => {
+        if (result.rowCount === 0) {
+            // If no rows were affected, return an error
+            res.status(404).json({ message: 'Yarn not found' });
+        } else {
+            // Send relevant response data to client-side
+            res.json({ message: 'Yarn deleted successfully', to_do_list: result.rows[0] });
+        }
+    })
+    .catch((error) => {
+        // Handle database errors
+        console.error(error);
+        res.status(500).json({ message: 'Internal server error' });
+    });
+});
 
  app.listen(port, function(err) {
     if (err) {

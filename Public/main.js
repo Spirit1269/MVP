@@ -1,7 +1,11 @@
 let container = document.querySelector(".container");  //<-- assuming there is a container on page
+let menu_container = document.querySelector(".menu_container")
+let main_container = document.querySelector(".main_container")
+
 document.querySelector('brand').addEventListener('click', getFetch)
 document.querySelector('size').addEventListener('click', getFetch)
 document.querySelector('fiber type').addEventListener('click', getFetch)
+
 
 function getFetch() {
     const choice = document.querySelector('input').value.toLowerCase();
@@ -9,7 +13,7 @@ function getFetch() {
     // Prepare the data to be sent in the request body
     const data = {
         brand: "Lion Brand",
-        name_: "Comy Cotton Blend", // Update with the actual data you want to add
+        name_: "name", // Update with the actual data you want to add
         size_id: 1,
         fiber_type1: "Acrylic",
         fiber_type2: "Cotton",
@@ -36,4 +40,5 @@ function getFetch() {
     .catch(function (error) {
         console.error("Error:", error);
     });
+    main_container.append(data.brand, data.name_, data.size_id, data.fiber_type1)
 }
