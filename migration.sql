@@ -14,15 +14,14 @@ CREATE TABLE fiber_type (
     fiber_name TEXT
 );
 CREATE TABLE yarn_table (
-    id SERIAL,
-    name_ varchar(255),
+    id SERIAL PRIMARY KEY,
     brand varchar(255) NOT NULL,
+    name_ varchar(255),
     size_id INTEGER REFERENCES size (id),
     fiber_type1 INTEGER REFERENCES fiber_type (id) NOT NULL,
     fiber_type2 INTEGER REFERENCES fiber_type (id),
     color varchar (100),
     length_ INTEGER,
-    quantity INTEGER,
-    PRIMARY KEY (id)
+    quantity INTEGER
 
 );

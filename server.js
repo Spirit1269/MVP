@@ -1,5 +1,6 @@
 //Declare dependencies
 import express from "express";
+import bodyParser from'body-parser';
 import dotenv from "dotenv";
 import pg from "pg";
 import { check, validationResult } from 'express-validator';
@@ -8,6 +9,7 @@ const { Pool } = pg;
 //Initialize Express
 const app = express();
 app.use(express.static("public"));
+app.use(bodyParser.json());
 
 //Initialize dotenv
 dotenv.config();
@@ -18,13 +20,16 @@ const pool = new Pool({connectionString:process.env.DATABASE_URL})
 pool.connect();
 
 app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+
+app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
     res.send("Welcome to the Yarn DB")
 })
 app.get('/api/yarn', (req, res) => {
     pool
-        .query('SELECT * FROM yarn')
+        .query('SELECT * FROM yarn_table')
         .then((result)=> {
             console.log(result)
             res.send(result.rows)
@@ -41,15 +46,19 @@ app.get('/api/yarn/:id', (req, res) => {
         .catch((e) => console.error(e.stack))
 })
 
-app.post('/api/yarn', (req, res) => {
-    req.checkBody('brand', 'Brand is required').notEmpty();
-    req.checkBody('fiber_type1', 'At least one fiber type is required').notEmpty();
-    const errors = req.validationErrors();
-    if (errors) {
-        // Return validation errors to the client-side
-        return res.status(400).json({ errors: errors });
+app.post('/api/yarn', [
+    check('brand').notEmpty().withMessage('Brand is required'),
+    check('fiber_type1').notEmpty().withMessage('At least one fiber type is required'),
+  ], (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      // Return validation errors to the client-side
+      return res.status(400).json({ errors: errors.array() });
     }
-    pool.query('INSERT INTO yarn (brand, name_, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING * ',[
+  
+    console.log(req.body)
+    pool.query('INSERT INTO yarn_table (brand, name_, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ($1, $2, $3, $4, $5, $6, $7, $8) RETURNING * ',
+    [
         req.body.brand,
         req.body.name_, 
         req.body.size_id, 
@@ -58,7 +67,8 @@ app.post('/api/yarn', (req, res) => {
         req.body.color,
         req.body.length_,
         req.body.quantity
-     ])
+    ])
+
       .then((result) => {
          // Send relevant response data to client-side
          res.status(201).json({ message: "Yarn added successfully", yarn: result.rows[0] });
@@ -68,31 +78,9 @@ app.post('/api/yarn', (req, res) => {
          console.error(error);
          res.status(500).json({ message: "Internal server error" });
      });
+    
      
 }); 
-
-app.patch('/api/yarn/:id', (req, res) => {
-    const id = req.params.id; // Get the id from URL parameter
-    const { brand, name_, size_id, fiber_type1, fiber_type2, color, length_, quantity } = req.body; // Get the updated data from request body
-
-    pool.query('UPDATE yarn_table SET brand = $1, name_ = $2, size_id = $3, fiber_type1 = $4, fiber_type2 = $5, color = $6, length_ = $6, quantity = $7 WHERE id = $8 RETURNING *', [
-        brand, name, size_id, fiber_type1, fiber_type2, color, length_, quantity 
-    ])
-    .then((result) => {
-        if (result.rowCount === 0) {
-            // If no rows were affected, return an error
-            res.status(404).json({ message: 'Yarn not found' });
-        } else {
-            // Send relevant response data to client-side
-            res.json({ message: 'Yarn updated successfully', to_do_list: result.rows[0] });
-        }
-    })
-    .catch((error) => {
-        // Handle database errors
-        console.error(error);
-        res.status(500).json({ message: 'Internal server error' });
-    });
-});
 
 app.delete('/api/yarn/:id', (req, res) => {
     const id = req.params.id; // Get the id from URL parameter
@@ -113,6 +101,82 @@ app.delete('/api/yarn/:id', (req, res) => {
         res.status(500).json({ message: 'Internal server error' });
     });
 });
+
+app.patch('/api/yarn/:id', (req, res) => {
+    const id = req.params.id; // Get the id from URL parameter
+    const { brand, name_, size_id, fiber_type1, fiber_type2, color, length_, quantity } = req.body; // Get the updated data from request body
+
+    // Construct the update query dynamically based on the fields that are present in the request body
+    let updateQuery = 'UPDATE yarn_table SET ';
+    const updateParams = [];
+    let paramCount = 1;
+
+    // Check if each field is present in the request body, and add it to the update query and parameters array
+    if (brand) {
+        updateQuery += `brand = $${paramCount}, `;
+        updateParams.push(brand);
+        paramCount++;
+    }
+    if (name_) {
+        updateQuery += `name_ = $${paramCount}, `;
+        updateParams.push(name_);
+        paramCount++;
+    }
+    if (size_id) {
+        updateQuery += `size_id = $${paramCount}, `;
+        updateParams.push(size_id);
+        paramCount++;
+    }
+    if (fiber_type1) {
+        updateQuery += `fiber_type1 = $${paramCount}, `;
+        updateParams.push(fiber_type1);
+        paramCount++;
+    }
+    if (fiber_type2) {
+        updateQuery += `fiber_type2 = $${paramCount}, `;
+        updateParams.push(fiber_type2);
+        paramCount++;
+    }
+    if (color) {
+        updateQuery += `color = $${paramCount}, `;
+        updateParams.push(color);
+        paramCount++;
+    }
+    if (length_) {
+        updateQuery += `length_ = $${paramCount}, `;
+        updateParams.push(length_);
+        paramCount++;
+    }
+    if (quantity) {
+        updateQuery += `quantity = $${paramCount}, `;
+        updateParams.push(quantity);
+        paramCount++;
+    }
+
+    updateQuery = updateQuery.slice(0, -2);
+
+    // Add the WHERE clause to specify the item to be updated
+    updateQuery += ` WHERE id = $${paramCount} RETURNING *`;
+    updateParams.push(id);
+
+    pool.query(updateQuery, updateParams)
+        .then((result) => {
+            if (result.rowCount === 0) {
+                // If no rows were affected, return an error
+                res.status(404).json({ message: 'Yarn not found' });
+            } else {
+                // Send relevant response data to client-side
+                res.json({ message: 'Yarn updated successfully', yarn_table: result.rows[0] });
+            }
+        })
+        .catch((error) => {
+            // Handle database errors
+            console.error(error);
+            res.status(500).json({ message: 'Internal server error' });
+        });
+});
+
+
 
  app.listen(port, function(err) {
     if (err) {

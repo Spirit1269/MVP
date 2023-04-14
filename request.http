@@ -1,21 +1,36 @@
 GET http://localhost:3008
 
 ###
-PATCH http://localhost:3008/api/yarn/1
-Content-Type: application/json
-{
-  "color": "blue"
-}
-
-###
 GET http://localhost:3008/api/yarn
+
 
 ###
 GET http://localhost:3008/api/yarn/1
 
 ###
-POST http://localhost:3008/api/yarn/
+POST http://localhost:3008/api/yarn
+Content-Type: application/json
+
+{
+  "brand":"Loops & Threads",
+  "name_":"Soft & Shiny",
+  "size_id":5,
+  "fiber_type1":2,
+  "fiber_type2": 1,
+  "color": "purple",
+  "length_":  311,
+  "quantity":  1
+}
+
 
 
 ###
-DELETE http://localhost:3009/api/3008/api/yarn/3
+DELETE http://localhost:3008/api/yarn/5
+
+###
+PATCH http://localhost:3008/api/yarn/1
+Content-Type: application/json
+
+{
+  "color": "blue"
+}
