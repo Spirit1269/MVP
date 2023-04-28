@@ -46,6 +46,28 @@ app.get('/api/yarn/:id', (req, res) => {
         .catch((e) => console.error(e.stack))
 })
 
+app.get('/api/yarn/brand',  (req, res) => {
+    // const brand = req.params.brand;
+       pool
+       .query('SELECT brand FROM yarn_table')
+       .then((result) => {
+            console.log(result.rows)
+            res.send(result.rows)
+       })
+       .catch((e) => console.error(e.stack))
+});
+
+app.get('/api/yarn/size',  (req, res) => {
+    // const brand = req.params.brand;
+       pool
+       .query('SELECT size FROM yarn_table')
+       .then((result) => {
+            console.log(result.rows)
+            res.send(result.rows)
+       })
+       .catch((e) => console.error(e.stack))
+});
+
 app.post('/api/yarn', [
     check('brand').notEmpty().withMessage('Brand is required'),
     check('fiber_type1').notEmpty().withMessage('At least one fiber type is required'),
