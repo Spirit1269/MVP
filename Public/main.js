@@ -68,34 +68,34 @@ brandButton.addEventListener('click', () => {
 });
 
 // Select the size button
-const sizeButton = document.querySelector('.size');
+// const sizeButton = document.querySelector('.size');
 
-// Add an event listener to the brand button
-sizeButton.addEventListener('click', () => {
-  // Make a request to fetch the sizes
-  fetch('/api/size')
-    .then(response => response.json())
-    .then(sizes => {
-      // Clear the main container
-      const mainContainer = document.querySelector('#main_container');
-      mainContainer.innerHTML = '';
+// // Add an event listener to the brand button
+// sizeButton.addEventListener('click', () => {
+//   // Make a request to fetch the sizes
+//   fetch('/api/size')
+//     .then(response => response.json())
+//     .then(sizes => {
+//       // Clear the main container
+//       const mainContainer = document.querySelector('#main_container');
+//       mainContainer.innerHTML = '';
 
-      // Display a list of sizes available
-      const sizeList = document.createElement('ul');
-      sizes.forEach(size => {
-        const sizeItem = document.createElement('li');
-        sizeItem.textContent = size.size;
-        console.log(sizeItem)
-        sizeList.appendChild(sizeItem);
-        console.log(sizeList)
-      });
+//       // Display a list of sizes available
+//       const sizeList = document.createElement('ul');
+//       sizes.forEach(size => {
+//         const sizeItem = document.createElement('li');
+//         sizeItem.textContent = size.size;
+//         console.log(sizeItem)
+//         sizeList.appendChild(sizeItem);
+//         console.log(sizeList)
+//       });
 
-      // Append the size list to the main container
-      mainContainer.appendChild(sizeList);
-      console.log(mainContainer)
-    })
-    .catch(error => console.error(error));
-});
+//       // Append the size list to the main container
+//       mainContainer.appendChild(sizeList);
+//       console.log(mainContainer)
+//     })
+//     .catch(error => console.error(error));
+// });
 
 
 // Select the fiber type button
