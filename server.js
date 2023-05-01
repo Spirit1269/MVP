@@ -6,10 +6,14 @@ import pg from "pg";
 import { check, validationResult } from 'express-validator';
 const { Pool } = pg;
 
+
+
 //Initialize Express
 const app = express();
-app.use(express.static("public"));
+app.use(express.static("Public"));
 app.use(bodyParser.json());
+
+
 
 //Initialize dotenv
 dotenv.config();
@@ -36,6 +40,8 @@ app.get('/api/yarn', (req, res) => {
         })
     .catch((e) => console.error(e.stack))
 })
+
+//Get yarn by ID
 app.get('/api/yarn/:id', (req, res) => {
     const id = req.params.id; // Get the id from URL parameter
     pool
@@ -46,21 +52,22 @@ app.get('/api/yarn/:id', (req, res) => {
         .catch((e) => console.error(e.stack))
 })
 
-app.get('/api/yarn/brand',  (req, res) => {
-    // const brand = req.params.brand;
-       pool
-       .query('SELECT brand FROM yarn_table')
-       .then((result) => {
-            console.log(result.rows)
+//Get all Brands of yarn in DB
+app.get('/api/brands', (req, res) => {
+    pool
+        .query('SELECT brand FROM yarn_table')
+        .then((result)=> {
+            console.log(result)
             res.send(result.rows)
-       })
-       .catch((e) => console.error(e.stack))
-});
+        })
+    .catch((e) => console.error(e.stack))
+})
 
-app.get('/api/yarn/size',  (req, res) => {
+//Get all sizes of yarn in DB
+app.get('/api/size',  (req, res) => {
     // const brand = req.params.brand;
        pool
-       .query('SELECT size FROM yarn_table')
+       .query('SELECT size_id FROM yarn_table')
        .then((result) => {
             console.log(result.rows)
             res.send(result.rows)
