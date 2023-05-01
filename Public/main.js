@@ -46,7 +46,7 @@ const brandButton = document.querySelector('.brand');
 // Add an event listener to the brand button
 brandButton.addEventListener('click', () => {
   // Make a request to fetch the brands
-  fetch('http://localhost:3008/api/brands')
+  fetch('/api/brands')
     .then(response => response.json())
     .then(brands => {
       // Clear the main container
@@ -73,7 +73,7 @@ const sizeButton = document.querySelector('.size');
 // Add an event listener to the brand button
 sizeButton.addEventListener('click', () => {
   // Make a request to fetch the sizes
-  fetch('http://localhost:3008/api/size')
+  fetch('/api/size')
     .then(response => response.json())
     .then(sizes => {
       // Clear the main container
@@ -233,7 +233,7 @@ const deleteButton = document.querySelector('.delete');
 deleteButton.addEventListener('click', () => {
   const id = document.querySelector('#delete_id').value;
   // Make a request to delete the yarn
-  fetch(`http://localhost:3008/api/yarn/${id}`, {
+  fetch(`/api/yarn/${id}`, {
     method: 'DELETE'
   })
   .then(response => {
@@ -267,7 +267,7 @@ updateButton.addEventListener('click', () => {
   const id = updateInput.value;
 
   // Fetch the yarn data for the specified ID
-  fetch(`http://localhost:3008/api/yarn/${id}`)
+  fetch(`/api/yarn/${id}`)
     .then(response => response.json())
     .then(yarnData => {
       // Create the form element
@@ -321,7 +321,7 @@ updateButton.addEventListener('click', () => {
         }
         
         // Update the yarn data
-        fetch(`http://localhost:3008/api/yarn/${id}`, {
+        fetch(`/api/yarn/${id}`, {
           method: 'PUT',
           headers: {
             'Content-Type': 'application/json'
