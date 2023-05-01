@@ -9,7 +9,7 @@ const allyarnButton = document.querySelector('.yarn');
 // Add event listener to the yarn button
 allyarnButton.addEventListener('click', () => {
   // Send a GET request to the API to get the yarn_table
-  fetch('http://localhost:3008/api/yarn')
+  fetch('/api/yarn')
     .then(response => response.json())
     .then(data => {
      
@@ -173,7 +173,7 @@ addYarnBtn.addEventListener("click", function() {
     const quantity = document.getElementById('quantity').value;
 
     // send a POST request to the API to add a new row to the yarn_table
-    fetch(`http://localhost:3008/api/yarn`, {
+    fetch(`/api/yarn`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json"

@@ -23,10 +23,6 @@ INSERT INTO fiber_type (fiber_name) VALUES ('Wool');
 INSERT INTO fiber_type (fiber_name) VALUES ('Merino Wool');
 
 -- Insert data into yarn_table table
-INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, color, length_, quantity)
-SELECT 'Yarn Bee True Colors', 'Hobby Lobby', size.id, 2, 'Mauve', 76, 2
-FROM size
-WHERE size.size_name = '7 - Jumbo';
 INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ('Comfy Cotton Blend', 'Lion Brand', 4, 1, 3, 'Mochaccino', 392, 1);
 INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ('Comfy Cotton Blend', 'Lion Brand', 4, 1, 3, 'Whipped Cream', 392, 1);
 INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ('Comfy Cotton Blend', 'Lion Brand', 4, 1, 3, 'Poppy', 392, 1);
