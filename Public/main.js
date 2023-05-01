@@ -36,7 +36,7 @@ allyarnButton.addEventListener('click', () => {
         console.error('Main container not found');
       }
     })
-     .catch(error => console.error(error));
+    //  .catch(error => console.error(error));
 });
 
 
@@ -64,7 +64,7 @@ brandButton.addEventListener('click', () => {
       // Append the brand list to the main container
       mainContainer.appendChild(brandList);
     })
-    .catch(error => console.error(error));
+    // .catch(error => console.error(error));
 });
 
 // Select the size button
@@ -215,7 +215,7 @@ addYarnBtn.addEventListener("click", function() {
       // clear the form
       form.reset();
     })
-    .catch(error => console.error(error));
+    // .catch(error => console.error(error));
   });
 
   // Clear the main container
@@ -334,8 +334,8 @@ updateButton.addEventListener('click', () => {
             successMessage.textContent = 'Yarn updated successfully.';
             mainContainer.appendChild(successMessage);
           })
-          .catch(error => console.error(error));
+          // .catch(error => console.error(error));
       });
     })
-    .catch(error => console.error(error));
+    // .catch(error => console.error(error));
 });
