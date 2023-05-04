@@ -28,5 +28,5 @@ INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, fiber_type2, color, 
 INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ('Comfy Cotton Blend', 'Lion Brand', 4, 1, 3, 'Poppy', 392, 1);
 INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ('Comfy Cotton Blend', 'Lion Brand', 4, 1, 3, 'Spectrum', 392, 1);
 INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, color, length_, quantity) VALUES ('I Love This Cotton', 'Hobby Lobby', 5, 1, 'Buttercup', 180, 2);
-INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ('Metallic DK', 'Paintbo', 4, 1, 3, 'Tequila Sunrise', 131, 10);
+INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, fiber_type2, color, length_, quantity) VALUES ('Metallic DK', 'Paintbox', 4, 1, 3, 'Tequila Sunrise', 131, 10);
 INSERT INTO yarn_table (name_, brand, size_id, fiber_type1, color, length_, quantity) VALUES ('Super Saver Jumbo Stripes', 'Red Heart', 5, 2, 'Ndwspaper Stripe', 482, 2 );

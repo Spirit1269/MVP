@@ -1,4 +1,4 @@
-GET http://localhost:3008
+GET http://localhost:3008/
 
 ###
 GET http://localhost:3008/api/yarn

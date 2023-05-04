@@ -10,7 +10,7 @@ const { Pool } = pg;
 
 //Initialize Express
 const app = express();
-app.use(express.static("Public"));
+app.use(express.static("public"));
 app.use(bodyParser.json());
 
 
