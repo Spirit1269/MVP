@@ -32,7 +32,7 @@ Content-Type: application/json
 
 
 ###
-DELETE http://localhost:3008/api/yarn/5
+DELETE http://localhost:3008/api/yarn/9
 
 ###
 PATCH http://localhost:3008/api/yarn/1

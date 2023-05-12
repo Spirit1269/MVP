@@ -18,8 +18,8 @@ CREATE TABLE yarn_table (
     brand varchar(255) NOT NULL,
     name_ varchar(255),
     size_id INTEGER REFERENCES size (id),
-    fiber_type1 INTEGER REFERENCES fiber_type (id) NOT NULL,
-    fiber_type2 INTEGER REFERENCES fiber_type (id),
+    fiber_type1 TEXT NOT NULL,
+    fiber_type2 TEXT,
     color varchar (100),
     length_ INTEGER,
     quantity INTEGER

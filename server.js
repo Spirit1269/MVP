@@ -28,9 +28,10 @@ app.use(express.urlencoded({ extended: false }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 
-// app.get('/', (req, res) => {
-//     res.send("Welcome to the Yarn DB")
-// })
+app.get('/', (req, res) => {
+    res.send("Welcome to the Yarn DB")
+})
+
 app.get('/api/yarn', (req, res) => {
     pool
         .query('SELECT * FROM yarn_table')
